@@ -1,14 +1,18 @@
-import { readDataFromFile, writeDataToFile } from '../utils/fileUtils.js';
+import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
 
 export const removeLastContact = async () => {
   try {
-    let contacts = await readDataFromFile();
-    if (!contacts.length) return;
-    contacts.pop();
-    await writeDataToFile(contacts);
-    console.log('Last contact removed and file updated successfully');
+    const data = await fs.readFile(PATH_DB, 'utf-8');
+    const contacts = JSON.parse(data);
+
+    if (contacts.length > 0) {
+      contacts.pop();
+    }
+
+    await fs.writeFile(PATH_DB, JSON.stringify(contacts, null, 2));
   } catch (error) {
-    console.error('Error during the removeLastContact process:', error);
+    console.error('Error deleting the last contact:', error);
   }
 };
 

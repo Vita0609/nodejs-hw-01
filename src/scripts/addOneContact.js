@@ -1,18 +1,25 @@
+import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
 import { createFakeContact } from '../utils/createFakeContact.js';
 
-import { readDataFromFile, writeDataToFile } from '../utils/fileUtils.js';
-
-const generateContacts = (number) => {
-  return Array.from({ length: number }, createFakeContact);
-};
 export const addOneContact = async () => {
   try {
-    let contacts = await readDataFromFile();
-    const newContacts = generateContacts(1);
-    contacts = contacts.concat(newContacts);
-    await writeDataToFile(contacts);
+    const existData = await fs.readFile(PATH_DB, 'utf-8');
+    const newOneContact = JSON.parse(existData);
+
+    const newContact = createFakeContact();
+
+    newOneContact.push(newContact);
+
+    await fs.writeFile(
+      PATH_DB,
+      JSON.stringify(newOneContact, null, 2),
+      'utf-8',
+    );
+
+    console.log('Contact added successfully');
   } catch (error) {
-    console.error('An error occurred during the addOneContact process:', error);
+    console.error('Error in operations', error);
   }
 };
 

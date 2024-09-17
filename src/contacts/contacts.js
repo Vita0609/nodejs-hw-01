@@ -1,3 +1,2 @@
-import path from 'node:path';
-export const PATH_DB = path.join(process.cwd(), 'src', 'db', 'db.json'); //'\\src\\db\\db.json';
-export const UNICODE = 'utf8';
+import path from 'path';
+export const PATH_DB = path.resolve('src', 'db/db.json');

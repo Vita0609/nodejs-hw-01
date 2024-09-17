@@ -1,13 +1,14 @@
-import { readDataFromFile } from '../utils/fileUtils.js';
+import { PATH_DB } from '../constants/contacts.js';
+import fs from 'fs/promises';
 
 export const getAllContacts = async () => {
   try {
-    return await readDataFromFile();
+    const data = await fs.readFile(PATH_DB, `utf-8`);
+    const contacts = JSON.parse(data);
+
+    return contacts;
   } catch (error) {
-    console.error(
-      'An error occurred during the getAllContacts process:',
-      error,
-    );
+    console.error(`Error when receiving contacts`, error);
   }
 };
 

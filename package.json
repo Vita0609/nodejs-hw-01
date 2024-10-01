@@ -4,9 +4,12 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "lint": "eslint src/**/*.js",
-    "start": "node ./src/index.js",
-    "dev": "nodemon src/index.js"
+    "get-all": "node src/scripts/getAllContacts",
+    "generate": "node src/scripts/generateContacts.js",
+    "add-one": "node src/scripts/addOneContact.js",
+    "count": "node src/scripts/countContacts.js",
+    "remove-last": "node src/scripts/removeLastContact.js",
+    "remove-all": "node src/scripts/removeAllContacts.js"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +19,11 @@
     "@eslint/js": "^9.10.0",
     "@faker-js/faker": "^9.0.1",
     "eslint": "^9.10.0",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.4"
   },
   "dependencies": {
+    "detect-file-encoding-and-language": "^2.4.0",
     "globals": "^15.9.0"
   }
 }

@@ -1,21 +1,15 @@
 import { promises as fs } from 'fs';
-import path from 'path';
-
-const dbPath = path.join(__dirname, '../db/db.json');
+import { PATH_DB } from '../constants/contacts.js';
 
 export const readContacts = async () => {
   try {
-    const data = await fs.readFile(dbPath, 'utf-8');
+    // Читання даних з файлу
+    const data = await fs.readFile(PATH_DB, 'utf-8');
+
+    // Перетворення JSON-рядка у об'єкт
     return JSON.parse(data);
   } catch (error) {
     console.error('Error reading contacts:', error);
-    throw error;
+    throw error; // кидання помилки для подальшої обробки
   }
 };
-readContacts()
-  .then((contacts) => {
-    console.log('Contacts:', contacts); // виведення зчитаних контактів
-  })
-  .catch((error) => {
-    console.error('Error reading contacts:', error); // обробка помилки
-  });

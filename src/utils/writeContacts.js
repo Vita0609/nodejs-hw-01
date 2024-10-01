@@ -1,28 +1,17 @@
 import { promises as fs } from 'fs';
-import path from 'path';
+import { PATH_DB } from '../constants/contacts.js';
 
-const dbPath = path.join(__dirname, '../db/db.json');
-
-export const writeContacts = async (data) => {
+export const writeContacts = async (updatedContacts) => {
   try {
-    const jsonData = JSON.stringify(data, null, 2);
-    await fs.writeFile(dbPath, jsonData, 'utf-8');
+    // Перетворення об'єкта на JSON-рядок з відступами для кращого форматування
+    const jsonData = JSON.stringify(updatedContacts, null, 2);
+
+    // Запис даних у файл за шляхом PATH_DB
+    await fs.writeFile(PATH_DB, jsonData, 'utf-8');
+
     console.log('Contacts successfully written to db.json');
   } catch (error) {
     console.error('Error writing contacts:', error);
-    throw error;
+    throw error; // Якщо сталася помилка, кидаємо її далі
   }
 };
-const contacts = [
-  { name: 'John Doe', email: 'john@example.com', phone: '123-456-7890' },
-  { name: 'Jane Smith', email: 'jane@example.com', phone: '987-654-3210' },
-];
-
-// Виклик функції для запису даних
-writeContacts(contacts)
-  .then(() => {
-    console.log('Contacts записано успішно.');
-  })
-  .catch((error) => {
-    console.error('Помилка запису:', error);
-  });
